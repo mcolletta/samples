@@ -1,0 +1,29 @@
+apply plugin: 'groovy'
+sourceCompatibility = 8
+
+apply plugin: 'application'
+
+dependencies {
+    compile localGroovy()
+    compile project(':desktop')
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src/main/groovy']
+        }
+    }
+}
+
+task runScript(type: JavaExec) {
+    description 'Run Zong! Groovy Application script'
+    main = 'demos.ZongGroovyApp'
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty('custom_arg')) {
+        args project.getProperty('custom_arg')
+    }
+}
+
+defaultTasks 'runScript'
